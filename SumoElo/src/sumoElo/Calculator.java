@@ -3,11 +3,12 @@ package sumoElo;
 import java.util.ArrayList;
 
 public class Calculator {
+	//constants that determine max Elo gained or lost
 	private static int KFactor = 15;
 	private static int INFK = 50;
 	
 	public static void calcElo(Rikishi winner, Rikishi loser, ArrayList<Rikishi> wresters, ArrayList <Rank> ranks) {
-		// calculate change in elo for winner and loser, return array with
+		// calculate change in elo for winner and loser
 		
 		// winner and loser elo
 		double winnerElo = winner.getElo();
@@ -16,6 +17,8 @@ public class Calculator {
 		double finalLoserElo = loserElo;
 		double difference = winnerElo - loserElo;
 		
+		//Winner
+		//Use inflated k factor for Rikishi with fewer than 20 bouts
 		if(winner.getBouts() < 20){
 			finalWinnerElo = winnerElo + INFK * (1 - adjustedDifference(winnerElo, loserElo));
 		}
@@ -24,6 +27,7 @@ public class Calculator {
 		}
 		winner.setElo(finalWinnerElo);
 		
+		//Loser
 		if(loser.getBouts() < 20){
 			finalLoserElo = loserElo + INFK * (0 - adjustedDifference(loserElo, winnerElo));
 		}
@@ -32,9 +36,11 @@ public class Calculator {
 		}
 		loser.setElo(finalLoserElo);
 		
+		//Print Changes
 		System.out.println(winner.getName() + " " + winnerElo + "->" + winner.getElo());
 		System.out.println(loser.getName() + " " + loserElo + "->" + loser.getElo());
 		
+		//This is for external use and will be removed when all data processing is coded 
 		String roundedDifference;
 		if(difference >= 0){
 		roundedDifference = difference + 5 +"";
@@ -46,10 +52,13 @@ public class Calculator {
 		roundedDifference = roundedDifference.substring(0, roundedDifference.length()-1) + "0";
 		int dif = Integer.parseInt(roundedDifference); 
 		System.out.println("Difference: " + dif);
+		
+		//To be implemented later
 		rankStats(winner, loser, ranks);
 		rankStats(loser, winner, ranks);
 	}
-
+	
+	//First Part of Calculation
 	public static double adjustedDifference(double elo1, double elo2) {
 		double exp1 = elo1/400.0;
 		double exp2 = elo2/400.0;
@@ -60,6 +69,7 @@ public class Calculator {
 		return num / den;
 	}
 	
+	//Unimplemented
 	public static void rankStats(Rikishi one, Rikishi two, ArrayList <Rank> ranks){
 		for(Rank rank : ranks){
 			if(one.getRank().equals(rank.getRank())){ 
@@ -67,7 +77,7 @@ public class Calculator {
 			}
 		}
 	}
-
+	//For Testing
 	public static void main(String[] args) {
 	Rikishi Hakuho = new Rikishi("Hakuho", "Y", 1700);
 	Rikishi Tochiozan = new Rikishi("T", "S", 1500);
