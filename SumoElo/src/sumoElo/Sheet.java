@@ -8,15 +8,16 @@ public class Sheet {
 	static Scanner console = new Scanner(System.in);
 	private static int numberOfStats = 4;
 	public static ArrayList<Rikishi> wrestlers = new ArrayList<Rikishi>();
+	//Will have use implemented eventually 
 	public static ArrayList<Rank> Ranks = new ArrayList<Rank>();
 
 	private static String tokenizedList(ArrayList<Rikishi> wrestlers, ArrayList<Rank> ranks) {
 		String tokenizedList = "";
 		for (Rikishi rikishi : wrestlers) {
-			tokenizedList += rikishi.getName() + " ";
-			tokenizedList += rikishi.getRank() + " ";
-			tokenizedList += rikishi.getCareerPeakElo() + " ";
-			tokenizedList += rikishi.getElo() + " ";
+			tokenizedList += rikishi.getName() + ",";
+			tokenizedList += rikishi.getRank() + ",";
+			tokenizedList += rikishi.getCareerPeakElo() + ",";
+			tokenizedList += rikishi.getElo() + ",";
 			tokenizedList += rikishi.getBouts();
 			tokenizedList += System.lineSeparator();
 		}
@@ -227,14 +228,14 @@ public class Sheet {
 		Scanner sc = new Scanner(file);
 		String stats = sc.nextLine();
 		while (sc.hasNextLine()) {
-				String name = stats.substring(0, stats.indexOf(" "));
-				stats = stats.substring(stats.indexOf(" ") + 1);
-				String rank = stats.substring(0, stats.indexOf(" "));
-				stats = stats.substring(stats.indexOf(" ") + 1);
-				double peakElo = Double.parseDouble(stats.substring(0, stats.indexOf(" ")));
-				stats = stats.substring(stats.indexOf(" ") + 1);
-				double elo = Double.parseDouble(stats.substring(0, stats.indexOf(" ")));
-				stats = stats.substring(stats.indexOf(" ") + 1);
+				String name = stats.substring(0, stats.indexOf(","));
+				stats = stats.substring(stats.indexOf(",") + 1);
+				String rank = stats.substring(0, stats.indexOf(","));
+				stats = stats.substring(stats.indexOf(",") + 1);
+				double peakElo = Double.parseDouble(stats.substring(0, stats.indexOf(",")));
+				stats = stats.substring(stats.indexOf(",") + 1);
+				double elo = Double.parseDouble(stats.substring(0, stats.indexOf(",")));
+				stats = stats.substring(stats.indexOf(",") + 1);
 				int bouts = Integer.parseInt(stats.substring(0, stats.length()));
 				wrestlers.add(new Rikishi(name, rank, elo, peakElo, bouts));
 				stats = sc.nextLine();
@@ -250,14 +251,14 @@ public class Sheet {
 		Scanner sc = new Scanner(file);
 		String stats = sc.nextLine();
 		while (sc.hasNextLine()) {
-				String name = stats.substring(0, stats.indexOf(" "));
-				stats = stats.substring(stats.indexOf(" ") + 1);
-				String rank = stats.substring(0, stats.indexOf(" "));
-				stats = stats.substring(stats.indexOf(" ") + 1);
-				double peakElo = Double.parseDouble(stats.substring(0, stats.indexOf(" ")));
-				stats = stats.substring(stats.indexOf(" ") + 1);
-				double elo = Double.parseDouble(stats.substring(0, stats.indexOf(" ")));
-				stats = stats.substring(stats.indexOf(" ") + 1);
+				String name = stats.substring(0, stats.indexOf(","));
+				stats = stats.substring(stats.indexOf(",") + 1);
+				String rank = stats.substring(0, stats.indexOf(","));
+				stats = stats.substring(stats.indexOf(",") + 1);
+				double peakElo = Double.parseDouble(stats.substring(0, stats.indexOf(",")));
+				stats = stats.substring(stats.indexOf(",") + 1);
+				double elo = Double.parseDouble(stats.substring(0, stats.indexOf(",")));
+				stats = stats.substring(stats.indexOf(",") + 1);
 				int bouts = Integer.parseInt(stats.substring(0, stats.length()));
 				wrestlers.add(new Rikishi(name, rank, elo, peakElo, bouts));
 				stats = sc.nextLine();
