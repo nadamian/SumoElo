@@ -24,7 +24,8 @@ public class Sheet {
 		tokenizedList += "done";
 		return tokenizedList;
 	}
-
+	/*Deals with user input all such code is only here until I figure out how to
+	 * work with the API*/
 	public static String getCommand(Scanner console) {
 		System.out.print("Enter a command: ");
 		String command = console.nextLine();
@@ -47,6 +48,7 @@ public class Sheet {
 				return;
 			}
 		}
+		//ranks are here but don't do anything, will be implemented later
 		if (command.equals("New Ranks")){
 			Ranks.add(new Rank("Y", 0, 0));
 			Ranks.add(new Rank("O", 0, 0));	
@@ -70,6 +72,7 @@ public class Sheet {
 			Ranks.add(new Rank("M16", 0, 0));
 			Ranks.add(new Rank("J", 0, 0));
 		}
+		//prints out list and breakdown of all wrestlers 
 		if (command.equals("print")) {
 			String line = "";
 			for (Rikishi rikishi : wrestlers) {
@@ -79,34 +82,38 @@ public class Sheet {
 			System.out.println(line);
 			return;
 		}
+		//where most of the user input happens
 		if (command.equals("bouts")) {
 			Rikishi winner = null;
 			Rikishi loser = null;
-			Rikishi prevWinner = new Rikishi ("breh", "J", 1000, 1000, 1);
-			Rikishi prevLoser = new Rikishi ("breh", "J", 1000, 1000, 1);
-			System.out.println("Please enter the bout in the form -Winner v Loser-");
+			//Fake rikishi because prevWinner can't be empty 
+			Rikishi prevWinner = new Rikishi("breh", "J", 1000, 1000, 1);
+			Rikishi prevLoser = new Rikishi("breh", "J", 1000, 1000, 1);
+			System.out.println("Enter the bout in the form -Winner v Loser-");
 			String bout = console.nextLine();
+			
 			while (!bout.equals("done")){
 				if(isBout(bout)){
-				String winnerString = bout.substring(0, bout.indexOf("v") - 1);
-				String loserString = bout.substring(bout.lastIndexOf(" ") + 1, bout.length());
-				for (Rikishi rikishi : wrestlers) {
-					if (rikishi.getName().equals(winnerString)) {
+					String winnerString = bout.substring(0, bout.indexOf("v") - 1);
+					String loserString = bout.substring(bout.lastIndexOf(" ") + 1, bout.length());
+					for (Rikishi rikishi : wrestlers) {
+						if (rikishi.getName().equals(winnerString)) {
 						winner = rikishi;
 					}
 					if (rikishi.getName().equals(loserString)) {
 						loser = rikishi;
 					}
 				}
-				if(!(winner == null) && !(loser == null) && !(prevWinner.getName().equals(winner.getName())) && !(prevLoser.getName().equals(loser.getName()))){
-				Calculator.calcElo(winner, loser, wrestlers, Ranks);
-				winner.newBout();
-				loser.newBout();
-				}
+				//makes sure there aren't repeat bouts input
+					if(!(winner == null) && !(loser == null) && !(prevWinner.getName().equals(winner.getName())) && !(prevLoser.getName().equals(loser.getName()))){
+						Calculator.calcElo(winner, loser, wrestlers, Ranks);
+						winner.newBout();
+						loser.newBout();
+					}
 				}
 				if(bout.equals("undo")){
-				prevWinner.setPrevElo();
-				prevLoser.setPrevElo();
+					prevWinner.setPrevElo();
+					prevLoser.setPrevElo();
 				}
 				prevWinner = winner;
 				prevLoser = loser; 
@@ -124,6 +131,7 @@ public class Sheet {
 			selectionSort();
 			return;
 		}
+		//removes rikishi from list
 		if (command.equals("retire")){
 			System.out.println("Who Has Retired?");
 			String name = console.nextLine();
@@ -133,6 +141,7 @@ public class Sheet {
 			}
 			return;
 		}
+		//unimplemented
 		if(command.equals("rank data")){
 			for(Rank rank : Ranks){
 				System.out.println(rank.getElo());
@@ -150,10 +159,12 @@ public class Sheet {
 				}
 				return;
 		}
+		//for testing - accesses different file
 		if(command.equals("Test Read")){
 			readTestFile();
 			return;
 		}
+		//saves to test file
 		if(command.equals("Test Save")){
 			String tokenizedList = tokenizedList(wrestlers, Ranks);
 			File outfile = new File("test.txt");
@@ -190,25 +201,6 @@ public class Sheet {
 	}
 
 	private static void selectionSort() {
-		/*int operations = 0;
-		for (int i = 0; i < wrestlers.size(); i++) {
-			Rikishi min = wrestlers.get(operations);
-			int minLocation = 0;
-			for (int j = operations; j < wrestlers.size(); j++) {
-				if (wrestlers.get(j).getElo() < min.getElo()) {
-					min = wrestlers.get(j);
-					minLocation = j;
-				}
-			}
-			if (minLocation > 0) {
-				Rikishi extra = wrestlers.remove(operations);
-				wrestlers.set(operations, min);
-				wrestlers.add(minLocation, extra);
-			}
-			operations++;
-		}
-		
-		}*/
 		for(int j = 0; j < wrestlers.size(); j++){
 			Rikishi max = wrestlers.get(j); 
 			for(int i = j; i < wrestlers.size(); i++){

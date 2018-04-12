@@ -44,7 +44,7 @@ public class Rikishi {
 		return careerPeakElo;
 	}
 
-	public double getEloRank() {
+	public int getEloRank() {
 		return eloRank;
 	}
 
