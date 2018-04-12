@@ -41,17 +41,14 @@ public class Calculator {
 		System.out.println(loser.getName() + " " + loserElo + "->" + loser.getElo());
 		
 		//This is for external use and will be removed when all data processing is coded 
-		String roundedDifference;
+		int roundedDifference;
 		if(difference >= 0){
-		roundedDifference = difference + 5 +"";
+		roundedDifference = (((int)Math.round(difference)+5)/10)*10;
 		}
 		else{
-			roundedDifference = difference - 5+"";
+			roundedDifference = (((int)Math.round(difference)/10))*10;
 		}
-		roundedDifference = roundedDifference.substring(0, roundedDifference.indexOf('.'));
-		roundedDifference = roundedDifference.substring(0, roundedDifference.length()-1) + "0";
-		int dif = Integer.parseInt(roundedDifference); 
-		System.out.println("Difference: " + dif);
+		System.out.println("Difference: " + roundedDifference);
 		
 		//To be implemented later
 		rankStats(winner, loser, ranks);
