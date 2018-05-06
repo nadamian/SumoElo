@@ -178,13 +178,14 @@ public class Sheet {
 		System.out.println("No valid command entered. Please enter a valid command");
 		command = getCommand(console);
 	}
-
+	//checks if bout syntax is valid
 	private static boolean isBout(String bout){
 		boolean Bout = false; 
 		if(bout.indexOf(" ") < 2){ return Bout;}
 		if(bout.charAt(bout.lastIndexOf(" ") - 1) == ('v')){Bout = true;}
 		return Bout;
 	}
+	//check if rank syntax is valid
 	private static boolean isValidRank(String rank) {
 		boolean isRank = false;
 		if (rank.charAt(0) == 'M' && Integer.parseInt(rank.charAt(1) + "") > 0)
