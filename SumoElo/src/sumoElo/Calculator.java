@@ -84,4 +84,5 @@ public class Calculator {
 	rikishi.add(Tochiozan);
 	calcElo(Tochiozan, Hakuho, rikishi, ranks);
 	}
+	//testing not working
 }
