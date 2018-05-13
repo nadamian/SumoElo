@@ -66,7 +66,24 @@ public class Sheet {
 		}
 		//where most of the user input happens
 		if (command.equals("bouts")) {
-			/*Rikishi winner = null;
+			/*for(int i = 0; i < wins.size(); i++) {
+				String e = east.get(i).substring(east.get(i).indexOf(" ") + 1, east.get(i).indexOf(" ", 5));
+				String w = west.get(i).substring(west.get(i).indexOf(" ") + 1, west.get(i).indexOf(" ", 5));
+				String win = "";
+				String lose = "";
+				if(wins.get(i)) {
+					win = e;
+					lose = w;
+				}
+				else {
+					win = w;
+					lose = e;
+				}
+				Rikishi winner = null;
+				Rikishi loser = null;
+				Calculator.calcElo(winner, loser, wrestlers, Ranks);
+			}*/
+			Rikishi winner = null;
 			Rikishi loser = null;
 			//Fake rikishi because prevWinner can't be empty 
 			Rikishi prevWinner = new Rikishi("breh", "J", 1000, 1000, 1);
@@ -102,7 +119,7 @@ public class Sheet {
 				System.out.println("Please enter the bout in the form -Winner v Loser-");
 				bout = console.nextLine();
 				}
-			return;*/
+			return;
 		}
 		
 		if (command.equals("read")) {

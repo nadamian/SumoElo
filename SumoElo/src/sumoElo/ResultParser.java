@@ -33,7 +33,7 @@ public class ResultParser {
 	}
 	public static void collect() {
 		try { 
-			Response response = Jsoup.connect("http://sumodb.sumogames.de/Results.aspx?b=201801&d=8").data("result", "tk_kekka", "east", "tk_east","west", "tk_west").userAgent("Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2")
+			Response response = Jsoup.connect("http://sumodb.sumogames.de/Results.aspx?b=201801&d=7").data("result", "tk_kekka", "east", "tk_east","west", "tk_west").userAgent("Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2")
                 .method(Method.POST)
                 .timeout(0).ignoreHttpErrors(true)
                 .execute();
@@ -48,8 +48,6 @@ public class ResultParser {
 		Elements temp = doc.select("td.tk_kekka");
 		Element [] winLoss = temp.toArray(new Element[]{});
 		//check for readable data
-		System.out.println(winLoss[0]);
-		System.out.println(winLoss[1]);
 		for(int i = 0; i < winLoss.length; i+=2){
 			String el = winLoss[i].toString();
 			if(el.substring(41, 42).equals("s")) {
@@ -60,14 +58,12 @@ public class ResultParser {
 			}
 		}
 		//check for correct vals in eastWin
-		System.out.println(eastWin);
 		//getting east rikishi
 		temp = doc.select("td.tk_east");
 			for(Element RikishiList:temp){
 			east.add(RikishiList.getAllElements().first().text().toString());
 			}
 			//test for correct info
-		System.out.println(east);
 		//getting west Rikishi
 		temp = doc.select("td.tk_west");
 			for(Element RikishiList:temp){
