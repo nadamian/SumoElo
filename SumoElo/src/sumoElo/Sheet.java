@@ -11,6 +11,7 @@ public class Sheet {
 	//Will have use implemented eventually 
 	public static ArrayList<Rank> Ranks = new ArrayList<Rank>();
 
+	//sets up CSV for saving 
 	private static String tokenizedList(ArrayList<Rikishi> wrestlers, ArrayList<Rank> ranks) {
 		String tokenizedList = "";
 		for (Rikishi rikishi : wrestlers) {
@@ -24,20 +25,25 @@ public class Sheet {
 		tokenizedList += "done";
 		return tokenizedList;
 	}
-	/*Deals with user input all such code is only here until I figure out how to
-	 * work with the API*/
+	/*Deals with user input still takes commands but most 
+	 *of its old job is gone thanks to automation #topical*/
 	public static String getCommand(Scanner console) {
 		System.out.print("Enter a command: ");
 		String command = console.nextLine();
 		return command;
 	}
-
+	//does things with user input
 	private static void handleCommand(String command) throws FileNotFoundException {
+		ResultParser.collect();
+		ArrayList<String> east = ResultParser.getEast();
+		ArrayList<String> west = ResultParser.getWest();
+		ArrayList<Boolean> wins = ResultParser.getWins();
 		// ignore empty input
 		if (command == null || command.isEmpty())
 			return;
 		// if "edit" allow user to select a rikishi to edit and give them the
 		// option to change any stat
+		//probably gonna repurpose this to just check for new rikishi automatically
 		if (command.equals("new")) {
 			System.out.println("Enter the Rikishi's name");
 			String name = console.nextLine();
@@ -47,30 +53,6 @@ public class Sheet {
 				wrestlers.add(new Rikishi(name, rank, 1000.0));
 				return;
 			}
-		}
-		//ranks are here but don't do anything, will be implemented later
-		if (command.equals("New Ranks")){
-			Ranks.add(new Rank("Y", 0, 0));
-			Ranks.add(new Rank("O", 0, 0));	
-			Ranks.add(new Rank("S", 0, 0));
-			Ranks.add(new Rank("K", 0, 0));
-			Ranks.add(new Rank("M1", 0, 0));
-			Ranks.add(new Rank("M2", 0, 0));
-			Ranks.add(new Rank("M3", 0, 0));
-			Ranks.add(new Rank("M4", 0, 0));
-			Ranks.add(new Rank("M5", 0, 0));
-			Ranks.add(new Rank("M6", 0, 0));
-			Ranks.add(new Rank("M7", 0, 0));
-			Ranks.add(new Rank("M8", 0, 0));
-			Ranks.add(new Rank("M9", 0, 0));
-			Ranks.add(new Rank("M10", 0, 0));
-			Ranks.add(new Rank("M11", 0, 0));
-			Ranks.add(new Rank("M12", 0, 0));
-			Ranks.add(new Rank("M13", 0, 0));
-			Ranks.add(new Rank("M14", 0, 0));
-			Ranks.add(new Rank("M15", 0, 0));
-			Ranks.add(new Rank("M16", 0, 0));
-			Ranks.add(new Rank("J", 0, 0));
 		}
 		//prints out list and breakdown of all wrestlers 
 		if (command.equals("print")) {
@@ -84,7 +66,7 @@ public class Sheet {
 		}
 		//where most of the user input happens
 		if (command.equals("bouts")) {
-			Rikishi winner = null;
+			/*Rikishi winner = null;
 			Rikishi loser = null;
 			//Fake rikishi because prevWinner can't be empty 
 			Rikishi prevWinner = new Rikishi("breh", "J", 1000, 1000, 1);
@@ -120,7 +102,7 @@ public class Sheet {
 				System.out.println("Please enter the bout in the form -Winner v Loser-");
 				bout = console.nextLine();
 				}
-			return;
+			return;*/
 		}
 		
 		if (command.equals("read")) {

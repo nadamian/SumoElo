@@ -16,6 +16,21 @@ public class ResultParser {
 	private static ArrayList<Boolean> eastWin = new ArrayList<Boolean>();
 	
 	//reads data from webpage needs link pasted in (Will fix in time)
+	public static void cutDown(ArrayList<String> direction) {
+		int i = 0;
+		int check = 0;
+		int stop = 0;
+		for(String rikishi:direction) {
+			if (rikishi.substring(0,1).equals("J") && stop < 1) {
+				check = i;
+				stop = 2;
+			}
+			i++;
+		}
+		for(int j = check; j < direction.size(); j += 0) {
+			direction.remove(j);
+		}
+	}
 	public static void collect() {
 		try { 
 			Response response = Jsoup.connect("http://sumodb.sumogames.de/Results.aspx?b=201801&d=8").data("result", "tk_kekka", "east", "tk_east","west", "tk_west").userAgent("Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2")
@@ -58,13 +73,37 @@ public class ResultParser {
 			for(Element RikishiList:temp){
 			west.add(RikishiList.getAllElements().first().text().toString());
 			}
+			cutDown(east);
+			cutDown(west); 
+			int longer = east.size();
+			if (west.size()>east.size()) {
+				longer = west.size();
+			}
+			for(int i = longer; i < eastWin.size(); i += 0) {
+				eastWin.remove(i);
+			}
 			//test for correct info
-		System.out.println(west);
+		//System.out.println(west);
+		//System.out.println(eastWin.size());
+		//System.out.println(east.size());
+		//System.out.println(west.size());
+		//System.out.println(east);
+		//System.out.println(west);
+		//System.out.println(eastWin);
 		} 
 		
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public static ArrayList<Boolean> getWins(){
+		return eastWin;
+	}
+	public static ArrayList<String> getEast(){
+		return east;
+	}
+	public static ArrayList<String> getWest(){
+		return west; 
 	}
 	public static void main(String[] args){
 		collect();
