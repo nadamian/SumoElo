@@ -33,7 +33,7 @@ public class ResultParser {
 	}
 	public static void collect() {
 		try { 
-			Response response = Jsoup.connect("http://sumodb.sumogames.de/Results.aspx?b=201801&d=11").data("result", "tk_kekka", "east", "tk_east","west", "tk_west").userAgent("Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2")
+			Response response = Jsoup.connect("http://sumodb.sumogames.de/Results.aspx?b=200301&d=2").data("result", "tk_kekka", "east", "tk_east","west", "tk_west").userAgent("Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2")
                 .method(Method.POST)
                 .timeout(0).ignoreHttpErrors(true)
                 .execute();
@@ -86,6 +86,14 @@ public class ResultParser {
 		//System.out.println(east);
 		//System.out.println(west);
 		//System.out.println(eastWin);
+			for(int i = 0; i < east.size(); i++) {
+				String fixed = east.remove(0);
+				east.add(fixed.substring(fixed.indexOf(" ")+1, fixed.indexOf(" ", 6)));
+			}
+			for(int i = 0; i < west.size(); i++) {
+				String fixed = west.remove(0);
+				west.add(fixed.substring(fixed.indexOf(" ")+1, fixed.indexOf(" ", 6)));
+			}
 		} 
 		
 		catch (IOException e) {

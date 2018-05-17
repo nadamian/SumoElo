@@ -91,8 +91,8 @@ public class Sheet {
 				}
 			}
 			for(int i = 0; i < wins.size(); i++) {
-				String e = east.get(i).substring(east.get(i).indexOf(" ") + 1, east.get(i).indexOf(" ", 5));
-				String w = west.get(i).substring(west.get(i).indexOf(" ") + 1, west.get(i).indexOf(" ", 5));
+				String e = east.get(i);
+				String w = west.get(i);
 				String win = "";
 				String lose = "";
 				if(wins.get(i)) {
