@@ -34,10 +34,6 @@ public class Sheet {
 	}
 	//does things with user input
 	private static void handleCommand(String command) throws FileNotFoundException {
-		ResultParser.collect();
-		ArrayList<String> east = ResultParser.getEast();
-		ArrayList<String> west = ResultParser.getWest();
-		ArrayList<Boolean> wins = ResultParser.getWins();
 		// ignore empty input
 		if (command == null || command.isEmpty())
 			return;
@@ -66,7 +62,35 @@ public class Sheet {
 		}
 		//where most of the user input happens
 		if (command.equals("bouts")) {
-			/*for(int i = 0; i < wins.size(); i++) {
+			ResultParser.collect();
+			ArrayList<String> east = ResultParser.getEast();
+			ArrayList<String> west = ResultParser.getWest();
+			ArrayList<Boolean> wins = ResultParser.getWins();
+			for(String name:east) {
+				Boolean namethere = false;
+				for(Rikishi rikishi:wrestlers) {
+					if(rikishi.getName().equals(name)) {
+						namethere = true; 
+					}
+				}
+				if(!namethere) {
+					Rikishi newGuy = new Rikishi(name, "M16", 1000, 1000, 1);
+					wrestlers.add(newGuy);
+				}
+			}
+			for(String name:west) {
+				Boolean namethere = false;
+				for(Rikishi rikishi:wrestlers) {
+					if(rikishi.getName().equals(name)) {
+						namethere = true; 
+					}
+				}
+				if(!namethere) {
+					Rikishi newGuy = new Rikishi(name, "M16", 1000, 1000, 1);
+					wrestlers.add(newGuy);
+				}
+			}
+			for(int i = 0; i < wins.size(); i++) {
 				String e = east.get(i).substring(east.get(i).indexOf(" ") + 1, east.get(i).indexOf(" ", 5));
 				String w = west.get(i).substring(west.get(i).indexOf(" ") + 1, west.get(i).indexOf(" ", 5));
 				String win = "";
@@ -81,44 +105,16 @@ public class Sheet {
 				}
 				Rikishi winner = null;
 				Rikishi loser = null;
+				for (Rikishi rikishi : wrestlers) {
+					if (rikishi.getName().equals(win)) {
+					winner = rikishi;
+				}
+				if (rikishi.getName().equals(lose)) {
+					loser = rikishi;
+				}
+				}
 				Calculator.calcElo(winner, loser, wrestlers, Ranks);
-			}*/
-			Rikishi winner = null;
-			Rikishi loser = null;
-			//Fake rikishi because prevWinner can't be empty 
-			Rikishi prevWinner = new Rikishi("breh", "J", 1000, 1000, 1);
-			Rikishi prevLoser = new Rikishi("breh", "J", 1000, 1000, 1);
-			System.out.println("Enter the bout in the form -Winner v Loser-");
-			String bout = console.nextLine();
-			
-			while (!bout.equals("done")){
-				if(isBout(bout)){
-					String winnerString = bout.substring(0, bout.indexOf("v") - 1);
-					String loserString = bout.substring(bout.lastIndexOf(" ") + 1, bout.length());
-					for (Rikishi rikishi : wrestlers) {
-						if (rikishi.getName().equals(winnerString)) {
-						winner = rikishi;
-					}
-					if (rikishi.getName().equals(loserString)) {
-						loser = rikishi;
-					}
-				}
-				//makes sure there aren't repeat bouts input
-					if(!(winner == null) && !(loser == null) && !(prevWinner.getName().equals(winner.getName())) && !(prevLoser.getName().equals(loser.getName()))){
-						Calculator.calcElo(winner, loser, wrestlers, Ranks);
-						winner.newBout();
-						loser.newBout();
-					}
-				}
-				if(bout.equals("undo")){
-					prevWinner.setPrevElo();
-					prevLoser.setPrevElo();
-				}
-				prevWinner = winner;
-				prevLoser = loser; 
-				System.out.println("Please enter the bout in the form -Winner v Loser-");
-				bout = console.nextLine();
-				}
+			}
 			return;
 		}
 		

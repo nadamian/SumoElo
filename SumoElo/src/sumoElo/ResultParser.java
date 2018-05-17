@@ -33,7 +33,7 @@ public class ResultParser {
 	}
 	public static void collect() {
 		try { 
-			Response response = Jsoup.connect("http://sumodb.sumogames.de/Results.aspx?b=201801&d=7").data("result", "tk_kekka", "east", "tk_east","west", "tk_west").userAgent("Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2")
+			Response response = Jsoup.connect("http://sumodb.sumogames.de/Results.aspx?b=201801&d=11").data("result", "tk_kekka", "east", "tk_east","west", "tk_west").userAgent("Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2")
                 .method(Method.POST)
                 .timeout(0).ignoreHttpErrors(true)
                 .execute();
@@ -71,11 +71,11 @@ public class ResultParser {
 			}
 			cutDown(east);
 			cutDown(west); 
-			int longer = east.size();
-			if (west.size()>east.size()) {
-				longer = west.size();
+			int shorter = east.size();
+			if (west.size()<east.size()) {
+				shorter = west.size();
 			}
-			for(int i = longer; i < eastWin.size(); i += 0) {
+			for(int i = shorter; i < eastWin.size(); i += 0) {
 				eastWin.remove(i);
 			}
 			//test for correct info
