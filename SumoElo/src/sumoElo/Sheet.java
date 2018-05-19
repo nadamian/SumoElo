@@ -5,8 +5,9 @@ import java.util.Scanner;
 import java.io.*;
 
 public class Sheet {
+	
 	static Scanner console = new Scanner(System.in);
-	private static int numberOfStats = 4;
+	//list of all rikishi
 	public static ArrayList<Rikishi> wrestlers = new ArrayList<Rikishi>();
 	//Will have use implemented eventually 
 	public static ArrayList<Rank> Ranks = new ArrayList<Rank>();
@@ -25,6 +26,7 @@ public class Sheet {
 		tokenizedList += "done";
 		return tokenizedList;
 	}
+	
 	/*Deals with user input still takes commands but most 
 	 *of its old job is gone thanks to automation #topical*/
 	public static String getCommand(Scanner console) {
@@ -32,6 +34,7 @@ public class Sheet {
 		String command = console.nextLine();
 		return command;
 	}
+	
 	//does things with user input
 	private static void handleCommand(String command) throws FileNotFoundException {
 		// ignore empty input
@@ -39,28 +42,19 @@ public class Sheet {
 			return;
 		// if "edit" allow user to select a rikishi to edit and give them the
 		// option to change any stat
-		//probably gonna repurpose this to just check for new rikishi automatically
-		if (command.equals("new")) {
-			System.out.println("Enter the Rikishi's name");
-			String name = console.nextLine();
-			System.out.println("Enter the Rikishi's rank");
-			String rank = console.nextLine();
-			if (isValidName(name) && isValidRank(rank)) {
-				wrestlers.add(new Rikishi(name, rank, 1000.0));
-				return;
-			}
-		}
+		
 		//prints out list and breakdown of all wrestlers 
 		if (command.equals("print")) {
 			String line = "";
 			for (Rikishi rikishi : wrestlers) {
-				line += rikishi.getEloRank() + " " + rikishi.getName() + " " + rikishi.getElo()
+				line += rikishi.getEloRank() + " " + rikishi.getName() + " " + rikishi.getElo() + " " + rikishi.getRank()
 						+ System.lineSeparator();
 			}
 			System.out.println(line);
 			return;
 		}
-		//where most of the user input happens
+		
+		//completely automated now
 		if (command.equals("bouts")) {
 			ResultParser.collect();
 			ArrayList<String> east = ResultParser.getEast();
@@ -91,8 +85,10 @@ public class Sheet {
 				}
 			}
 			for(int i = 0; i < wins.size(); i++) {
-				String e = east.get(i);
-				String w = west.get(i);
+				String e = east.get(i).substring(east.get(i).indexOf(" ")+1);
+				String w = west.get(i).substring(west.get(i).indexOf(" ")+1);
+				System.out.println(e);
+				System.out.println(w);
 				String win = "";
 				String lose = "";
 				if(wins.get(i)) {
@@ -144,13 +140,23 @@ public class Sheet {
 			return;
 		}
 		
+		//set ranks automatically (doesn't work yet)
 		if(command.equals("change rank")){
-				System.out.println("Whos Rank Has Changed?");
-				String name = console.nextLine();
-				System.out.println("What is their new rank?");
-				String rank = console.nextLine();
-				for(Rikishi rikishi : wrestlers){
-					if(name.equals(rikishi.getName())){rikishi.setRank(rank);}
+			ArrayList<String> east = ResultParser.getEast();
+			ArrayList<String> west = ResultParser.getWest();
+				for(String name:east) {
+					for(int i = 0; i < wrestlers.size(); i++) {
+						if(name.substring(name.indexOf(" ")+1).equals(wrestlers.get(i).getName())) {
+							wrestlers.get(i).setRank(name.substring(0, name.indexOf(" ")));
+						}
+					}
+				}
+				for(String name:west) {
+					for(int i = 0; i < wrestlers.size(); i++) {
+						if(name.substring(name.indexOf(" ")+1).equals(wrestlers.get(i).getName())) {
+							wrestlers.get(i).setRank(name.substring(0, name.indexOf(" ")));
+						}
+					}
 				}
 				return;
 		}

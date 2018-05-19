@@ -88,11 +88,11 @@ public class ResultParser {
 		//System.out.println(eastWin);
 			for(int i = 0; i < east.size(); i++) {
 				String fixed = east.remove(0);
-				east.add(fixed.substring(fixed.indexOf(" ")+1, fixed.indexOf(" ", 6)));
+				east.add(fixed.substring(0, fixed.indexOf(" ", 6)));
 			}
 			for(int i = 0; i < west.size(); i++) {
 				String fixed = west.remove(0);
-				west.add(fixed.substring(fixed.indexOf(" ")+1, fixed.indexOf(" ", 6)));
+				west.add(fixed.substring(0, fixed.indexOf(" ", 6)));
 			}
 		} 
 		
