@@ -63,24 +63,24 @@ public class Sheet {
 			for(String name:east) {
 				Boolean namethere = false;
 				for(Rikishi rikishi:wrestlers) {
-					if(rikishi.getName().equals(name)) {
+					if(rikishi.getName().equals(name.substring(name.indexOf(" ")+1))) {
 						namethere = true; 
 					}
 				}
 				if(!namethere) {
-					Rikishi newGuy = new Rikishi(name, "M16", 1000, 1000, 1);
+					Rikishi newGuy = new Rikishi(name.substring(name.indexOf(" ")+1), name.substring(0,name.indexOf(" ")), 1000, 1000, 1);
 					wrestlers.add(newGuy);
 				}
 			}
 			for(String name:west) {
 				Boolean namethere = false;
 				for(Rikishi rikishi:wrestlers) {
-					if(rikishi.getName().equals(name)) {
+					if(rikishi.getName().equals(name.substring(name.indexOf(" ")+1))) {
 						namethere = true; 
 					}
 				}
 				if(!namethere) {
-					Rikishi newGuy = new Rikishi(name, "M16", 1000, 1000, 1);
+					Rikishi newGuy = new Rikishi(name.substring(name.indexOf(" ")+1), name.substring(0, name.indexOf(" ")), 1000, 1000, 1);
 					wrestlers.add(newGuy);
 				}
 			}
@@ -109,6 +109,8 @@ public class Sheet {
 					loser = rikishi;
 				}
 				}
+				winner.newBout();
+				loser.newBout();
 				Calculator.calcElo(winner, loser, wrestlers, Ranks);
 			}
 			return;
@@ -142,6 +144,7 @@ public class Sheet {
 		
 		//set ranks automatically (doesn't work yet)
 		if(command.equals("change rank")){
+			ResultParser.collect();
 			ArrayList<String> east = ResultParser.getEast();
 			ArrayList<String> west = ResultParser.getWest();
 				for(String name:east) {
