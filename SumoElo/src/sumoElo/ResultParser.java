@@ -33,7 +33,7 @@ public class ResultParser {
 	}
 	public static void collect() {
 		try { 
-			Response response = Jsoup.connect("http://sumodb.sumogames.de/Results.aspx?b=200001&d=3").data("result", "tk_kekka", "east", "tk_east","west", "tk_west").userAgent("Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2")
+			Response response = Jsoup.connect("http://sumodb.sumogames.de/Results.aspx?b=200001&d=15").data("result", "tk_kekka", "east", "tk_east","west", "tk_west").userAgent("Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2")
                 .method(Method.POST)
                 .timeout(0).ignoreHttpErrors(true)
                 .execute();
