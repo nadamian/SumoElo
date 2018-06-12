@@ -28,6 +28,13 @@ public class Sheet {
 			tokenizedList += System.lineSeparator();
 		}
 		tokenizedList += "done";
+		for(int i = 0; i < 500; i++) {
+			tokenizedList += pct[i][0] + ",";
+			tokenizedList += System.lineSeparator();
+			tokenizedList += pct[i][1] + ",";
+			tokenizedList += System.lineSeparator();
+		}
+		tokenizedList+="done";
 		return tokenizedList;
 	}
 	
@@ -228,7 +235,7 @@ public class Sheet {
 		FileReader file = new FileReader("rikishi.txt");
 		Scanner sc = new Scanner(file);
 		String stats = sc.nextLine();
-		while (sc.hasNextLine()) {
+		while (!stats.equals("done")) {
 				String name = stats.substring(0, stats.indexOf(","));
 				stats = stats.substring(stats.indexOf(",") + 1);
 				String rank = stats.substring(0, stats.indexOf(","));
@@ -241,6 +248,15 @@ public class Sheet {
 				wrestlers.add(new Rikishi(name, rank, elo, peakElo, bouts));
 				stats = sc.nextLine();
 			}
+		stats = sc.nextLine();
+		int count = 0;
+		while (!stats.equals("done")) {
+			pct[count][0] = Double.parseDouble(stats);
+			stats = sc.nextLine();
+			pct[count][1] = Double.parseDouble(stats);
+			stats = sc.nextLine(); 
+		}
+		
 		selectionSort();
 		for (int i = 1; i < wrestlers.size(); i++) {
 			wrestlers.get(i).setEloRank(i + 1);
