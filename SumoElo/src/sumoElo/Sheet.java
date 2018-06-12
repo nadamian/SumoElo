@@ -11,6 +11,10 @@ public class Sheet {
 	public static ArrayList<Rikishi> wrestlers = new ArrayList<Rikishi>();
 	//Will have use implemented eventually 
 	public static ArrayList<Rank> Ranks = new ArrayList<Rank>();
+	//stores all data on bouts at 1 elo difference increments 
+	//1st row = win% for higher rated at dif, 2nd = # of bouts
+	//needs to be read and stored
+	public static double[][] pct = new double[500][2];
 
 	//sets up CSV for saving 
 	private static String tokenizedList(ArrayList<Rikishi> wrestlers, ArrayList<Rank> ranks) {
@@ -263,6 +267,18 @@ public class Sheet {
 		selectionSort();
 		for (int i = 1; i < wrestlers.size(); i++) {
 			wrestlers.get(i).setEloRank(i + 1);
+		}
+	}
+	public void update(boolean win, int dif) {
+		double sto = pct[dif][0];
+		double num = pct[dif][1];
+		if(win) {
+		pct[dif][0] = ((sto * num) + 1)/(num+1);
+		pct[dif][1]++;
+		}
+		else {
+			pct[dif][0] = sto*num/(num+1);
+			pct[dif][1]++;
 		}
 	}
 
